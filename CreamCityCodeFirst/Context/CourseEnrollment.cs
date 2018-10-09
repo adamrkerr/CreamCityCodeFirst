@@ -12,6 +12,9 @@ namespace CreamCityCodeFirst.Context
         }
 
         [Required]
+        public EnrollmentStatus Status { get; set; }
+
+        [Required]
         public Guid StudentId { get; set; }
 
         [Required]
@@ -22,9 +25,6 @@ namespace CreamCityCodeFirst.Context
         public Student Student { get; set; }
 
         public Course Course { get; set; }
-
-        [Required]
-        public EnrollmentStatus Status { get; set; }
 
     }
 }

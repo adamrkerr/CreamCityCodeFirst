@@ -38,6 +38,14 @@ namespace CreamCityCodeFirst.Context
             modelBuilder.Query<StudentGPA>()
                 .ToView(nameof(UniversityDbContext.StudentGPAs));
 
+            //Below is the same result as above, using a query instead of a view
+            //var gpaString = $@"SELECT s.Id as {nameof(StudentGPA.Id)}, count(c.{nameof(CourseEnrollment.Id)}) as {nameof(StudentGPA.CoursesEnrolled)},  avg(c.{nameof(CourseEnrollment.FinalGrade)}) as {nameof(StudentGPA.GPA)}
+            //    From {nameof(UniversityDbContext.Students)} s
+            //    Left outer join {nameof(UniversityDbContext.CourseEnrollments)} c on c.{nameof(CourseEnrollment.StudentId)} = s.{nameof(Student.Id)}
+            //    Group by s.{nameof(Student.Id)}";
+            //modelBuilder.Query<StudentGPA>()
+            //    .ToQuery(() => StudentGPAs.FromSql(gpaString));
+
             modelBuilder.Entity<Course>()
                 .HasOne(m => m.Instructor) //set up foreign key relationships
                 .WithMany(m => m.Courses);
