@@ -45,7 +45,7 @@ namespace CreamCityCodeFirst.DI
                 {
                     var context = scope.ServiceProvider.GetService<UniversityDbContext>();
                     context.Database.Migrate();
-                    context.EnsureSeedData().Wait();
+                    //context.EnsureSeedData().Wait(); No longer call this in 2.1
                 }
             }
 

@@ -15,6 +15,7 @@ namespace CreamCityCodeFirst.Context
             return !context.Database.GetPendingMigrations().Any();
         }
 
+        [Obsolete("This is no longer needed in EF Core 2.1", true)]
         public static async Task EnsureSeedData(this UniversityDbContext context)
         {
             if (!context.AllMigrationsApplied())

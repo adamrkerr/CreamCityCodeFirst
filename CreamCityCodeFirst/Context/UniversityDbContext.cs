@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using CreamCityCodeFirst.Contracts;
+using CreamCityCodeFirst.Models;
 
 namespace CreamCityCodeFirst.Context
 {
@@ -62,10 +63,66 @@ namespace CreamCityCodeFirst.Context
 
             modelBuilder.Entity<StudentGPA>()
                 .HasKey(s => s.Id);
-                
+
 
             ApplyCommonStructure(modelBuilder);
 
+            SetupSeedData(modelBuilder);
+
+        }
+
+        private void SetupSeedData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Department>().HasData(
+                new Department
+                {
+                    Id = DepartmentMetaData.EducationDepartmentId,
+                    Code = DepartmentMetaData.EducationDepartmentCode,
+                    Description = DepartmentMetaData.EducationDepartmentName,
+                    Name = DepartmentMetaData.EducationDepartmentName,
+                    LastChangedByUser = "system startup",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                },
+                new Department
+                {
+                    Id = DepartmentMetaData.MusicDepartmentId,
+                    Code = DepartmentMetaData.MusicDepartmentCode,
+                    Description = DepartmentMetaData.MusicDepartmentName,
+                    Name = DepartmentMetaData.MusicDepartmentName,
+                    LastChangedByUser = "system startup",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                },
+                new Department
+                {
+                    Id = DepartmentMetaData.EngineeringDepartmentId,
+                    Code = DepartmentMetaData.EngineeringDepartmentCode,
+                    Description = DepartmentMetaData.EngineeringDepartmentName,
+                    Name = DepartmentMetaData.EngineeringDepartmentName,
+                    LastChangedByUser = "system startup",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                },
+                new Department
+                {
+                    Id = DepartmentMetaData.UnassignedDepartmentId,
+                    Code = DepartmentMetaData.UnassignedDepartmentCode,
+                    Description = DepartmentMetaData.UnassignedDepartmentName,
+                    Name = DepartmentMetaData.UnassignedDepartmentName,
+                    LastChangedByUser = "system startup",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                });
+
+            modelBuilder.Entity<Instructor>().HasData(
+                new Instructor
+                {
+                    Id = InstructorMetaData.UnassignedInstructorId,
+                    BirthDate = new DateTime(1900, 1, 1),
+                    FirstName = "Unassigned",
+                    LastName = "Unassigned",
+                    HireDate = new DateTime(1900, 1, 1),
+                    DepartmentId = DepartmentMetaData.UnassignedDepartmentId,
+                    LastChangedByUser = "system startup",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                });
         }
 
         private void ApplyCommonStructure(ModelBuilder modelBuilder)
