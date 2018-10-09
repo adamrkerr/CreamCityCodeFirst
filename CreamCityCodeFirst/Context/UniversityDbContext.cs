@@ -60,6 +60,10 @@ namespace CreamCityCodeFirst.Context
                 .Property(m => m.FinalGrade)
                 .HasColumnType("decimal(6,3)");
 
+            modelBuilder.Entity<CourseEnrollment>()
+                .Property(m => m.Status)
+                .HasConversion<string>();
+
             modelBuilder.Entity<Department>()
                 .Property(d => d.Id)
                 .ValueGeneratedNever();

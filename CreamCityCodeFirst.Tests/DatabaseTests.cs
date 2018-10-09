@@ -267,7 +267,8 @@ namespace CreamCityCodeFirst.Tests
                         CourseId = courseId,
                         FinalGrade = 0m,
                         Student = student,
-                        Id = Guid.NewGuid()
+                        Id = Guid.NewGuid(),
+                        Status = EnrollmentStatus.Withdrawn
                     });
                 }
 

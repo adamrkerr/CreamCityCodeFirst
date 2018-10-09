@@ -23,5 +23,8 @@ namespace CreamCityCodeFirst.Context
 
         public Course Course { get; set; }
 
+        [Required]
+        public EnrollmentStatus Status { get; set; }
+
     }
 }
