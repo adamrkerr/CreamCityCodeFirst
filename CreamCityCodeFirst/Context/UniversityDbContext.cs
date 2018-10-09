@@ -31,10 +31,13 @@ namespace CreamCityCodeFirst.Context
 
         public DbSet<Department> Departments { get; set; }
 
-        public DbSet<StudentGPA> StudentGPAs { get; set; }
+        public DbQuery<StudentGPA> StudentGPAs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Query<StudentGPA>()
+                .ToView(nameof(UniversityDbContext.StudentGPAs));
+
             modelBuilder.Entity<Course>()
                 .HasOne(m => m.Instructor) //set up foreign key relationships
                 .WithMany(m => m.Courses);
@@ -60,10 +63,6 @@ namespace CreamCityCodeFirst.Context
             modelBuilder.Entity<Department>()
                 .Property(d => d.Id)
                 .ValueGeneratedNever();
-
-            modelBuilder.Entity<StudentGPA>()
-                .HasKey(s => s.Id);
-
 
             ApplyCommonStructure(modelBuilder);
 
