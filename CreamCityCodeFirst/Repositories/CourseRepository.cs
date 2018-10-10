@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 
 namespace CreamCityCodeFirst.Repositories
 {
@@ -27,10 +28,13 @@ namespace CreamCityCodeFirst.Repositories
                         .Include(c => c.EnrolledStudents)
                         .ThenInclude(c => c.Student)
                         .Where(c => c.Id == courseId)
+                        .ProjectTo<CourseDetail>() //Automapper
                         .SingleOrDefault();
 
-            return Mapper.Map<CourseDetail>(course);
+            return course;
 
+            //Not needed because of ProjectTo<>
+            //return Mapper.Map<CourseDetail>(course);
         }
 
         public async Task<IEnumerable<CourseSummary>> GetCourses()

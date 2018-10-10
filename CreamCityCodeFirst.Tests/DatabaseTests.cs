@@ -275,6 +275,18 @@ namespace CreamCityCodeFirst.Tests
                 await dbContext.SaveChangesAsync();
             }
 
+            //now, confirm class exists
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var repo = _fixture.ServiceProvider.GetRequiredService<ICourseRepository>();
+
+                var detail = await repo.GetCourse(courseId);
+
+                Assert.NotNull(detail);
+
+                Assert.Equal(100, detail.CourseNumber);
+            }
+
             //now, confirm class has 1000 students
             using (var scope = _fixture.ServiceProvider.CreateScope())
             {
