@@ -50,7 +50,7 @@ namespace CreamCityCodeFirst.Context
             //Below is the same result as above, using a query to call a function instead of a view
             modelBuilder.Query<CourseAverage>()
                 .ToQuery(() => CourseAverages.FromSql(CourseAverageQuery))                
-                .HasOne(a => a.Course)                
+                .HasOne(a => a.Course) //query types can have navigation
                 .WithMany()
                 .HasForeignKey(a => a.CourseId);
 
