@@ -261,11 +261,13 @@ namespace CreamCityCodeFirst.Tests
                     //add the student
                     dbContext.Students.Add(student);
 
+                    var random = new Random();
+
                     //add student to class
                     dbContext.CourseEnrollments.Add(new CourseEnrollment
                     {
                         CourseId = courseId,
-                        FinalGrade = 0m,
+                        FinalGrade = random.Next(0, 101),
                         Student = student,
                         Id = Guid.NewGuid(),
                         Status = EnrollmentStatus.Withdrawn
@@ -307,6 +309,18 @@ namespace CreamCityCodeFirst.Tests
                 var gpas = context.StudentGPAs.ToList();
 
                 Assert.True(gpas.Count >= 1000);
+            }
+
+            //now, test the query
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var context = _fixture.ServiceProvider.GetRequiredService<UniversityDbContext>();
+
+                var courseAverage = context.CourseAverages
+                            .Include(c => c.Course)
+                            .Single(c => c.Course.Id == courseId);
+
+                Assert.NotEqual(0, courseAverage.AverageGrade);
             }
 
             //BURN IT DOWN!!!!!

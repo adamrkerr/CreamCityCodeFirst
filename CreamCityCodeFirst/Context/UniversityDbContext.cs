@@ -33,18 +33,26 @@ namespace CreamCityCodeFirst.Context
 
         public DbQuery<StudentGPA> StudentGPAs { get; set; }
 
+        public DbQuery<CourseAverage> CourseAverages { get; set; }
+
+        //use this constants so that
+        //1) references are easy to find for refactoring
+        //2) ef core won't complain about sql injection risks
+        internal const string CourseAverageFunctionName = "fnCourseAverages";
+
+        private const string CourseAverageQuery = "select * from " + CourseAverageFunctionName + "()";
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Query<StudentGPA>()
                 .ToView(nameof(UniversityDbContext.StudentGPAs));
 
-            //Below is the same result as above, using a query instead of a view
-            //var gpaString = $@"SELECT s.Id as {nameof(StudentGPA.Id)}, count(c.{nameof(CourseEnrollment.Id)}) as {nameof(StudentGPA.CoursesEnrolled)},  avg(c.{nameof(CourseEnrollment.FinalGrade)}) as {nameof(StudentGPA.GPA)}
-            //    From {nameof(UniversityDbContext.Students)} s
-            //    Left outer join {nameof(UniversityDbContext.CourseEnrollments)} c on c.{nameof(CourseEnrollment.StudentId)} = s.{nameof(Student.Id)}
-            //    Group by s.{nameof(Student.Id)}";
-            //modelBuilder.Query<StudentGPA>()
-            //    .ToQuery(() => StudentGPAs.FromSql(gpaString));
+            //Below is the same result as above, using a query to call a function instead of a view
+            modelBuilder.Query<CourseAverage>()
+                .ToQuery(() => CourseAverages.FromSql(CourseAverageQuery))                
+                .HasOne(a => a.Course)                
+                .WithMany()
+                .HasForeignKey(a => a.CourseId);
 
             modelBuilder.Entity<Course>()
                 .HasOne(m => m.Instructor) //set up foreign key relationships

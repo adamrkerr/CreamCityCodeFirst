@@ -12,6 +12,8 @@ namespace CreamCityCodeFirst.Models
         
         public int CourseNumber { get; set; }
 
+        public int NumberStudentsEnrolled { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -24,6 +26,5 @@ namespace CreamCityCodeFirst.Models
 
         public string InstructorName { get; set; }
 
-        public int NumberStudentsEnrolled { get; set; }
     }
 }

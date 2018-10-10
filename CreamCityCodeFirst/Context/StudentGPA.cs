@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CreamCityCodeFirst.Context
 {
-    public class StudentGPA: IIdentified<Guid>
+    internal class StudentGPA: IIdentified<Guid>
     {
         public Guid Id { get; set; }
 
