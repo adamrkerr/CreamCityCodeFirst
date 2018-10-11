@@ -56,7 +56,7 @@ namespace CreamCityCodeFirst.Repositories
         public async Task<IEnumerable<CourseSummary>> GetCourses(IEnumerable<int> courseNumbers)
         {
             var cnTable = new DataTable();
-            cnTable.Columns.Add("CourseNumber", typeof(Int64));
+            cnTable.Columns.Add("CourseNumber", typeof(int));
 
             foreach (var cn in courseNumbers)
             {
