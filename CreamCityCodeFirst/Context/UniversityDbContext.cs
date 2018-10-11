@@ -23,6 +23,8 @@ namespace CreamCityCodeFirst.Context
 
         public DbSet<Course> Courses { get; set; }
 
+        internal const string CourseNumberTableTypeName = "CourseNumber";
+
         public DbSet<Instructor> Instructors { get; set; }
 
         public DbSet<Student> Students { get; set; }

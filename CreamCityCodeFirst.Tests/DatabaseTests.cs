@@ -214,6 +214,67 @@ namespace CreamCityCodeFirst.Tests
         }
 
         [Fact]
+        public async Task TestCourseJoin()
+        {
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<UniversityDbContext>();
+
+                await dbContext.Courses.AddAsync(new Course
+                {
+                    CourseNumber = 105,
+                    DepartmentId = DepartmentMetaData.EngineeringDepartmentId,
+                    Name = "ENG 105",
+                    ClassDuration = new TimeSpan(1, 30, 0),
+                    StartDate = new DateTimeOffset(new DateTime(2017, 9, 7), new TimeSpan(-5, 0, 0)),
+                    EndDate = new DateTimeOffset(new DateTime(2017, 12, 20), new TimeSpan(-6, 0, 0)),
+                    Id = Guid.NewGuid(),
+                    InstructorId = InstructorMetaData.UnassignedInstructorId
+                });
+
+
+                await dbContext.Courses.AddAsync(new Course
+                {
+                    CourseNumber = 205,
+                    DepartmentId = DepartmentMetaData.EngineeringDepartmentId,
+                    Name = "ENG 205",
+                    ClassDuration = new TimeSpan(1, 30, 0),
+                    StartDate = new DateTimeOffset(new DateTime(2017, 9, 7), new TimeSpan(-5, 0, 0)),
+                    EndDate = new DateTimeOffset(new DateTime(2017, 12, 20), new TimeSpan(-6, 0, 0)),
+                    Id = Guid.NewGuid(),
+                    InstructorId = InstructorMetaData.UnassignedInstructorId
+                });
+
+
+                await dbContext.Courses.AddAsync(new Course
+                {
+                    CourseNumber = 404,
+                    DepartmentId = DepartmentMetaData.EngineeringDepartmentId,
+                    Name = "ENG 404",
+                    ClassDuration = new TimeSpan(1, 30, 0),
+                    StartDate = new DateTimeOffset(new DateTime(2017, 9, 7), new TimeSpan(-5, 0, 0)),
+                    EndDate = new DateTimeOffset(new DateTime(2017, 12, 20), new TimeSpan(-6, 0, 0)),
+                    Id = Guid.NewGuid(),
+                    InstructorId = InstructorMetaData.UnassignedInstructorId
+                });
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var repository = scope.ServiceProvider.GetService<ICourseRepository>();
+
+                var found = await repository.GetCourses(new[] { 105, 404 });
+
+                Assert.NotNull(found);
+                Assert.Equal(2, found.Count());
+            }
+            
+        }
+
+        [Fact]
         public async Task TestCourseDeletion()
         {
             var courseId = Guid.NewGuid();

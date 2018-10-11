@@ -9,5 +9,6 @@ namespace CreamCityCodeFirst.Repositories
     {
         Task<CourseDetail> GetCourse(Guid courseId);
         Task<IEnumerable<CourseSummary>> GetCourses();
+        Task<IEnumerable<CourseSummary>> GetCourses(IEnumerable<int> courseNumbers);
     }
 }
